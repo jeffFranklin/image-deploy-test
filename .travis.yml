@@ -10,7 +10,8 @@ before_deploy:
 - gcloud auth activate-service-account --key-file client-secret.json
 - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed 's/[^-A-Za-z0-9]/_/g"')"
 - export GIT_TAG="$(git describe --tags)"
-- export TAGS="latest $BRANCH_NAME $GIT_TAG"
+- set
+- export TAGS="latest $TRAVIS_BRANCH $GIT_TAG"
 - for tag in $TAGS; do
     echo $tag;
     docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag;
