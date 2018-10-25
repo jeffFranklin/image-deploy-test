@@ -1,12 +1,14 @@
-cache: 
+cache:
   directories:
-    - "$HOME/google-cloud-sdk/"
-
+  - "$HOME/google-cloud-sdk/"
 services:
-  - docker
-
+- docker
 script:
-  - docker build . -t jeff-busybox:latest
-  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
-  - ls $HOME/google-cloud-sdk/bin
-  - which gcloud
+- docker build . -t jeff-busybox:latest
+before_deploy:
+- if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+- ls $HOME/google-cloud-sdk/bin
+- which gcloud
+- openssl aes-256-cbc -K $encrypted_115b5340ff69_key -iv $encrypted_115b5340ff69_iv
+  -in foo-file.enc -out foo-file -d
+- cat foo-file
