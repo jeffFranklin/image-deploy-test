@@ -10,6 +10,7 @@ before_deploy:
 - ls $HOME/google-cloud-sdk/bin
 - which gcloud
 - openssl aes-256-cbc -K $encrypted_115b5340ff69_key -iv $encrypted_115b5340ff69_iv -in foo-file.enc -out foo-file -d -debug
+- cat foo-file
 deploy:
   provider: script
   script: find .
