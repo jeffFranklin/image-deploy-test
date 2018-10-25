@@ -13,6 +13,6 @@ before_deploy:
   -in foo-file.enc -out foo-file -d
 deploy:
   provider: script
-  script: cat foo-file
+  script: find .
   on:
     branch: master
