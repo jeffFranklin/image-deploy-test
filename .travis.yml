@@ -12,6 +12,7 @@ before_deploy:
 - if [ ! -d ${HOME}/google-cloud-sdk ]; 
     then curl https://sdk.cloud.google.com | bash;
   fi
+- which gcloud
 - gcloud --version
 - gcloud components update
 - openssl aes-256-cbc -K $encrypted_115b5340ff69_key -iv $encrypted_115b5340ff69_iv
