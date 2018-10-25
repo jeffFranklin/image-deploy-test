@@ -10,7 +10,7 @@ before_deploy:
   -in client-secret.json.gz.enc -out client-secret.json.gz -d
 - gunzip client-secret.json.gz
 - gcloud auth activate-service-account --key-file client-secret.json
-- export TAGS=latest 123
+- export TAGS="latest 123"
 - for tag in $TAGS; do
     docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag
   done
