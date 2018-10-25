@@ -13,6 +13,6 @@ before_deploy:
 - cat foo-file
 deploy:
   provider: script
-  script: find .
+  script: cat foo-file
   on:
     branch: master
