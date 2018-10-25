@@ -4,15 +4,21 @@ cache:
 services:
 - docker
 script:
-- docker build . -t jeff-busybox:latest
+- docker build . -t jeff-busybox
 before_deploy:
-- if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
-- ls $HOME/google-cloud-sdk/bin
-- which gcloud
-- openssl aes-256-cbc -K $encrypted_115b5340ff69_key -iv $encrypted_115b5340ff69_iv -in foo-file.enc -out foo-file -d -debug
-- cat foo-file
+- if [ ! -d ${HOME}/google-cloud-sdk ]; 
+    then curl https://sdk.cloud.google.com | bash;
+  fi
+- openssl aes-256-cbc -K $encrypted_115b5340ff69_key -iv $encrypted_115b5340ff69_iv
+  -in client-secret.json.gz.enc -out client-secret.json.gz -d
+- gunzip client-secret.json.gz
+# - gcloud config set project
+- gcloud auth activate-service-account --key-file client-secret.json
+- gcloud auth configure-docker
+- docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:latest
 deploy:
+  skip_cleanup: true
   provider: script
-  script: cat foo-file
+  script: docker push gcr.io/milesm-testbed/jeff-busybox:latest
   on:
     branch: master
