@@ -20,7 +20,7 @@ before_deploy:
 - gunzip client-secret.json.gz
 # - gcloud config set project
 - gcloud auth activate-service-account --key-file client-secret.json
-- gcloud beta auth configure-docker
+- gcloud beta auth configure-docker --quiet
 - docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:latest
 deploy:
   skip_cleanup: true
