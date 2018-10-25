@@ -15,5 +15,4 @@ deploy:
   provider: script
   script: cat foo-file
   on:
-    tags: true
-    all_branches: true
+    branch: master
