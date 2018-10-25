@@ -6,7 +6,7 @@ services:
 script:
 - docker build . -t jeff-busybox
 before_deploy:
-- echo $super_secret_stuff | base64 -D > client-secret.json
+- echo $super_secret_stuff | base64 -d | zcat > client-secret.json
 - gcloud auth activate-service-account --key-file client-secret.json
 - export TAGS="latest 456"
 - for tag in $TAGS; do
