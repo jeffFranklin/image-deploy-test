@@ -12,7 +12,7 @@ before_deploy:
 - gcloud auth activate-service-account --key-file client-secret.json
 - export TAGS="latest 123"
 - for tag in $TAGS; do
-    docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag
+    docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag;
   done
 deploy:
   skip_cleanup: true
