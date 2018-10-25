@@ -8,9 +8,8 @@ script:
 before_deploy:
 - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
 - gcloud auth activate-service-account --key-file client-secret.json
-- export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed 's/[^-A-Za-z0-9]/_/g"')"
+- export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed 's/[^-A-Za-z0-9]/_/g')"
 - export GIT_TAG="$(git describe --tags)"
-- set
 - export TAGS="latest $TRAVIS_BRANCH $GIT_TAG"
 - for tag in $TAGS; do
     echo $tag;
