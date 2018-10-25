@@ -12,11 +12,12 @@ before_deploy:
 - export GIT_TAG="$(git describe --tags)"
 - export TAGS="latest $BRANCH_NAME $GIT_TAG"
 - for tag in $TAGS; do
+    echo $tag;
     docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag;
   done
 deploy:
   skip_cleanup: true
   provider: script
-  script: for tag in $TAGS; do gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox:$tag; done
+  script: for tag in $TAGS; do echo $tag && gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox:$tag; done
   on:
     branch: master
