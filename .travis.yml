@@ -6,11 +6,9 @@ services:
 script:
 - docker build . -t jeff-busybox
 before_deploy:
-- openssl aes-256-cbc -K $encrypted_115b5340ff69_key -iv $encrypted_115b5340ff69_iv
-  -in client-secret.json.gz.enc -out client-secret.json.gz -d
-- gunzip client-secret.json.gz
+- echo $super_secret_stuff | base64 -D > client-secret.json
 - gcloud auth activate-service-account --key-file client-secret.json
-- export TAGS="latest 123"
+- export TAGS="latest 456"
 - for tag in $TAGS; do
     docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag;
   done
