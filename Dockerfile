@@ -1,3 +1,5 @@
-FROM busybox
+FROM python:3-alpine
 
-CMD ["ls"]
+RUN apk add --no-cache git
+RUN ls
+CMD ["python"]

@@ -1,10 +1,11 @@
-#cache:
-#  directories:
-#  - "$HOME/google-cloud-sdk/"
 services:
 - docker
+before_script:
+- echo $super_secret_stuff | base64 -d | zcat > client-secret.json
+- gcloud auth activate-service-account --key-file client-secret.json
 script:
-- docker build . -t jeff-busybox
+- gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox
+- docker build --cache-from gcr.io/milesm-testbed/jeff-busybox -t jeff-busybox .
 before_deploy:
 - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
 - gcloud auth activate-service-account --key-file client-secret.json
@@ -21,4 +22,4 @@ deploy:
   provider: script
   script: echo "deploy happened in before_deploy"
   on:
-    branch: master
+    all_branches: true
