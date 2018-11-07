@@ -4,4 +4,4 @@ before_script:
 - echo $TEST_DEPLOY_KEY | base64 -d | zcat > .ssh/id_rsa
 - chmod 600 .ssh/id_rsa
 script:
-- ssh -o StrictHostKeyChecking=no $TEST_DEPLOY_TARGET
+- ssh -o StrictHostKeyChecking=no -i .ssh/id_rsa $TEST_DEPLOY_TARGET
