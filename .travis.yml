@@ -1,7 +1,6 @@
 language: python
 before_script:
+- set | grep TRAVIS
 - mkdir .ssh
-- echo $TEST_DEPLOY_KEY | base64 -d | zcat > .ssh/id_rsa
-- chmod 600 .ssh/id_rsa
-script:
-- ssh -o StrictHostKeyChecking=no -i .ssh/id_rsa $TEST_DEPLOY_TARGET
+- test -z "$TRAVIS_PULL_REQUEST_BRANCH" || travis_terminate 0
+- echo "can you believe we made it this far?"
