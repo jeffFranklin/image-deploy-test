@@ -1,5 +1,7 @@
 language: python
 before_script:
+- mkdir .ssh
 - echo $TEST_DEPLOY_KEY | base64 -d | zcat > .ssh/id_rsa
+- chmod 600 .ssh/id_rsa
 script:
 - ssh $TEST_DEPLOY_TARGET
