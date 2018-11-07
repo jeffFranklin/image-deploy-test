@@ -18,8 +18,12 @@ before_deploy:
     gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox:$tag;
   done
 deploy:
-  skip_cleanup: true
-  provider: script
-  script: echo "deploy happened in before_deploy"
-  on:
-    all_branches: true
+  - skip_cleanup: true
+    provider: script
+    script: echo "deploy happened in before_deploy"
+    on:
+      all_branches: true
+  - provider: script
+    script: echo "whoop whoop!"
+    on:
+      branch: branch1
