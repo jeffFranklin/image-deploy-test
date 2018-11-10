@@ -1,6 +1,12 @@
 language: python
 install: true
+before_script:
+  - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
+  - gcloud auth activate-service-account --key-file client-secret.json
 script:
+  - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-a || true
+  - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-b || true
   - docker-compose build
-  - docker-compose run busybox-b
-
+  - docker-compose run jeff-busybox-b
+  - gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox-a
+  - gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox-b

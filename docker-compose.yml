@@ -2,9 +2,9 @@ version: '3'
 services:
   busybox-a:
     build: .
-    image: busybox-a
+    image: gcr.io/milesm-testbed/jeff-busybox-a
   busybox-b:
     build:
       context: .
       dockerfile: Dockerfile-b
-    image: busybox-b
+    image: gcr.io/milesm-testbed/jeff-busybox-b
