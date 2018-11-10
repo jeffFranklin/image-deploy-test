@@ -8,5 +8,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-b
+      cache_from: ["gcr.io/milesm-testbed/jeff-busybox-b"]
     image: gcr.io/milesm-testbed/jeff-busybox-b
-    cache_from: ["gcr.io/milesm-testbed/jeff-busybox-b"]
