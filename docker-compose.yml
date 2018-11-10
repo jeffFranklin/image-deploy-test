@@ -1,12 +1,12 @@
 version: '3.2'
 services:
-  busybox-a:
+  jeff-busybox-a:
     build: 
       context: .
       cache_from:
         - gcr.io/milesm-testbed/jeff-busybox-a
     image: gcr.io/milesm-testbed/jeff-busybox-a
-  busybox-b:
+  jeff-busybox-b:
     build:
       context: .
       dockerfile: Dockerfile-b
