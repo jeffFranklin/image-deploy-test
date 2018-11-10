@@ -3,6 +3,7 @@ install: true
 before_script:
   - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
   - gcloud auth activate-service-account --key-file client-secret.json
+  - docker-compose --version
 script:
   - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-a || true
   - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-b || true
