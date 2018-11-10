@@ -7,6 +7,6 @@ script:
   - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-a || true
   - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-b || true
   - docker-compose build
-  - docker-compose run jeff-busybox-b
+  - docker-compose run gcr.io/milesm-testbed/jeff-busybox-b
   - gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox-a
   - gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox-b
