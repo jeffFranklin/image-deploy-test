@@ -13,5 +13,5 @@ services:
       cache_from:
         - gcr.io/milesm-testbed/jeff-busybox-b
     depends_on:
-      - gcr.io/milesm-testbed/jeff-busybox-a
+      - jeff-busybox-a
     image: gcr.io/milesm-testbed/jeff-busybox-b
