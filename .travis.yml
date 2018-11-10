@@ -1,6 +1,6 @@
 language: python
-before_script:
-- set | grep TRAVIS
-- mkdir .ssh
-- test -z "$TRAVIS_PULL_REQUEST_BRANCH" || travis_terminate 0
-- echo "can you believe we made it this far?"
+install: true
+script:
+  - docker-compose build
+  - docker-compose run busybox-b
+

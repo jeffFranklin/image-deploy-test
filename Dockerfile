@@ -1,5 +1,6 @@
-FROM python:3-alpine
+FROM busybox
 
-RUN apk add --no-cache git
-RUN ls
-CMD ["python"]
+RUN echo "hi mom"
+COPY a /a
+RUN echo "goodbye"
+CMD ["cat", "a"]
