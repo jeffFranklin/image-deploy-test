@@ -1,15 +1,21 @@
 language: python
 install: true
+env:
+  - DOCKER_ROOT=gcr.io/milesm-testbed/
 before_script:
   - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
   - gcloud auth activate-service-account --key-file client-secret.json
   - docker-compose version
   - docker version
 script:
-  - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-a || true
-  - gcloud docker -- pull gcr.io/milesm-testbed/jeff-busybox-b || true
-  - docker-compose build
-  - docker-compose run jeff-busybox-b
-  - docker-compose run jeff-busybox-a
-  - gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox-a
-  - gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox-b
+  - for image in jeff-busybox-a jeff-busybox-b; do
+      gcloud docker -- pull ${DOCKER_ROOT}${image} || true ;
+      docker tag ${DOCKER_ROOT}${image} ${image} || true;
+      docker-compose build;
+    done
+  - docker run jeff-busybox-b
+  - docker run jeff-busybox-a
+  - for image in jeff-busybox-a jeff-busybox-b; do
+      docker tag ${image} ${DOCKER_ROOT}${image} ;
+      gcloud docker -- push ${DOCKER_ROOT}${image} ;
+    done
