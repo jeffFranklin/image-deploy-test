@@ -3,6 +3,8 @@ install: true
 env:
   - DOCKER_ROOT=gcr.io/uwit-mci-iam/
 before_script:
+  - echo $identityuw-gcr-sa-admin
+  - echo $identityuw-gcr-sa-admin | wc
   - echo $identityuw-gcr-sa-admin | base64 -d > client-secret.json
   - cat client-secret.json | docker login -u _json_key --password-stdin https://gcr.io
   - docker-compose version
