@@ -1,10 +1,10 @@
 language: python
 install: true
 env:
-  - DOCKER_ROOT=gcr.io/milesm-testbed/
+  - DOCKER_ROOT=gcr.io/uwit-mci-iam/
 before_script:
-  - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
-  - gcloud auth activate-service-account --key-file client-secret.json
+  - echo $identityuw-gcr-sa-admin | base64 -d | zcat > client-secret.json
+  - zcat key.json | docker login -u _json_key --password-stdin https://gcr.io
   - docker-compose version
   - docker version
 script:
