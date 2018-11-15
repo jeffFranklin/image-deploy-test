@@ -9,7 +9,7 @@ before_script:
   - docker version
 script:
   - for image in jeff-busybox-a jeff-busybox-b; do
-      gcloud docker -- pull ${DOCKER_ROOT}${image} || true ;
+      docker pull ${DOCKER_ROOT}${image} || true ;
       docker tag ${DOCKER_ROOT}${image} ${image} || true;
       docker-compose build;
     done
@@ -17,5 +17,5 @@ script:
   - docker run jeff-busybox-a
   - for image in jeff-busybox-a jeff-busybox-b; do
       docker tag ${image} ${DOCKER_ROOT}${image} ;
-      gcloud docker -- push ${DOCKER_ROOT}${image} ;
+      docker push ${DOCKER_ROOT}${image} ;
     done
