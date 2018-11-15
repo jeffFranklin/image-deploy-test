@@ -3,13 +3,13 @@ install: true
 env:
   - DOCKER_ROOT=gcr.io/uwit-mci-iam/
 before_script:
-  - echo $GCR_ADMIN_TOKEN | base64 -d > client-secret.json
-  - cat client-secret.json | docker login -u _json_key --password-stdin https://gcr.io
+  - echo $GCR_ADMIN_TOKEN | base64 -d | zcat > client-secret.json
+  - gcloud auth activate-service-account --key-file client-secret.json
   - docker-compose version
   - docker version
 script:
   - for image in jeff-busybox-a jeff-busybox-b; do
-      docker pull ${DOCKER_ROOT}${image} || true ;
+      gcloud docker -- pull ${DOCKER_ROOT}${image} || true ;
       docker tag ${DOCKER_ROOT}${image} ${image} || true;
       docker-compose build;
     done
@@ -17,5 +17,5 @@ script:
   - docker run jeff-busybox-a
   - for image in jeff-busybox-a jeff-busybox-b; do
       docker tag ${image} ${DOCKER_ROOT}${image} ;
-      docker push ${DOCKER_ROOT}${image} ;
-    done
+      gcloud docker -- push ${DOCKER_ROOT}${image} ;
+done
