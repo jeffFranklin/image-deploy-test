@@ -1,24 +1,21 @@
-#cache:
-#  directories:
-#  - "$HOME/google-cloud-sdk/"
-services:
-- docker
+language: python
+install: true
+env:
+  - DOCKER_ROOT=gcr.io/milesm-testbed/
+before_script:
+  - echo $super_secret_stuff | base64 -d | zcat > client-secret.json
+  - gcloud auth activate-service-account --key-file client-secret.json
+  - docker-compose version
+  - docker version
 script:
-- docker build . -t jeff-busybox
-before_deploy:
-- echo $super_secret_stuff | base64 -d | zcat > client-secret.json
-- gcloud auth activate-service-account --key-file client-secret.json
-- export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed 's/[^-A-Za-z0-9]/_/g')"
-- export GIT_TAG="$(git describe --tags)"
-- export TAGS="latest $TRAVIS_BRANCH $GIT_TAG"
-- for tag in $TAGS; do
-    echo $tag;
-    docker tag jeff-busybox gcr.io/milesm-testbed/jeff-busybox:$tag;
-    gcloud docker -- push gcr.io/milesm-testbed/jeff-busybox:$tag;
-  done
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: echo "deploy happened in before_deploy"
-  on:
-    branch: master
+  - for image in jeff-busybox-a jeff-busybox-b; do
+      gcloud docker -- pull ${DOCKER_ROOT}${image} || true ;
+      docker tag ${DOCKER_ROOT}${image} ${image} || true;
+      docker-compose build;
+    done
+  - docker run jeff-busybox-b
+  - docker run jeff-busybox-a
+  - for image in jeff-busybox-a jeff-busybox-b; do
+      docker tag ${image} ${DOCKER_ROOT}${image} ;
+      gcloud docker -- push ${DOCKER_ROOT}${image} ;
+    done

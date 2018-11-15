@@ -1,0 +1,7 @@
+FROM busybox
+
+RUN echo "hi mom"
+COPY --from=jeff-busybox-a /a /a
+COPY b /b
+RUN echo "goodbye"
+CMD ["cat", "a", "b"]

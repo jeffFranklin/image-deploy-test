@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  jeff-busybox-a:
+    build: 
+      context: .
+      cache_from:
+        - jeff-busybox-a
+    image: jeff-busybox-a
+  jeff-busybox-b:
+    build:
+      context: .
+      dockerfile: Dockerfile-b
+      cache_from:
+        - jeff-busybox-b
+    depends_on:
+      - jeff-busybox-a
+    image: jeff-busybox-b
