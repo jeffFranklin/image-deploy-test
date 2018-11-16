@@ -1,11 +1,7 @@
 language: python
 
 install:
-  - curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-225.0.0-linux-x86_64.tar.gz | tar xzf -
-  - source google-cloud-sdk/path.bash.inc
-  - echo $GCR_ADMIN_TOKEN | base64 -d > client-secret.json
-  - gcloud auth activate-service-account --key-file client-secret.json
-  - gcloud auth configure-docker --quiet
+  - echo $GCR_ADMIN_TOKEN | base64 -d | docker login -u _json_key --password-stdin https://gcr.io
 
 env:
   - DOCKER_ROOT=gcr.io/uwit-mci-iam/
